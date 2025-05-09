@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Candidatura - Midnight Runners</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    .navbar {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem 2rem;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(89, 0, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+        padding: 0.8rem 2rem;
+        background: rgba(0, 0, 0, 0.95);
+        box-shadow: 0 5px 20px rgba(98, 0, 255, 0.1);
+    }
+
+    .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-brand i {
+        color: #8400ff;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        color: #888;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #8400ff, #5900ff);
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: #fff;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .nav-links a.active {
+        color: #8400ff;
+    }
+
+    .nav-links a.active::after {
+        width: 100%;
+    }
+        
+    :root {
+      --container-width: 1000px;
+    }
+
+    .discord-container {
+      width: 100%;
+      max-width: var(--container-width);
+      margin: 120px auto 50px;
+      padding: 2rem;
+    }
+
+    .discord-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .discord-header h2 {
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .discord-header p {
+      color: #888;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .discord-card {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .discord-card h3 {
+      color: #9625ffb4;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .discord-card p {
+      color: #aaa;
+      margin-bottom: 1rem;
+    }
+
+    .discord-button {
+      display: inline-block;
+      background: #a858f2;
+      color: white;
+      padding: 0.8rem 1.6rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .discord-button:hover {
+      background: #8c47c4;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 5rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a {
+      color: #888;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-gamepad"></i>
+            <span>Midnight Runners</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="media.html">Media</a>
+            <a href="team.html">Team</a>
+            <a href="discord.html">Discord</a>
+            <a href="candidatura.html" class="active">Candidatura</a>
+        </div>
+    </nav>
+
+  <div class="discord-container">
+    <div class="discord-header">
+      <h2>Candidatura</h2>
+      <p>Se pensi di essere all'altezza per gareggiare con noi, compila il modulo. Lo analizzeremo e ti contatteremo in caso verrai selezionato!</p>
+    </div>
+
+    <div class="discord-card">
+      <h3>Link Candidatura</h3>
+      <p>Clicca qui per aprire il modulo per candidarti:</p>
+      <a href="https://forms.gle/F3ZrymMB1vMMdYXU7" target="_blank" class="discord-button">Candidati</a>
+    </div>
+  </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="imprint.html">Altre Info</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2025 Midnight Runners Crew.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html> 

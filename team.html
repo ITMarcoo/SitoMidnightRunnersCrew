@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(89, 0, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 2rem;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 5px 20px rgba(98, 0, 255, 0.1);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand i {
+            color: #8400ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8400ff, #5900ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #8400ff;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .team-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 100px auto 50px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(119, 0, 255, 0.2);
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(111, 0, 255, 0.2),
+                transparent
+            );
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+
+        .team-card:hover::before {
+            animation: shimmer 1.5s infinite;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(119, 0, 255, 0.2);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid #8400ff;
+            padding: 3px;
+            background: linear-gradient(45deg, #8400ff, #5900ff);
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .team-rank {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(45deg, #8400ff, #7700ff);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-discord {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-discord i {
+            color: #a872da;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(98, 0, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #8c00ff;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .modal-text {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .modal-tasks {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(111, 0, 255, 0.2);
+        }
+
+        .modal-tasks h3 {
+            color: #8c00ff;
+            margin-bottom: 1rem;
+        }
+
+        .modal-tasks ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-tasks li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #888;
+        }
+
+        .modal-tasks li::before {
+            content: '•';
+            color: #8c00ff;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(98, 0, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(111, 0, 255, 0.3),
+                transparent
+            );
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .footer-content::after {
+            content: '';
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(132, 0, 255, 0.3),
+                transparent
+            );
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2.5rem;
+            background: rgba(111, 0, 255, 0.05);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(119, 0, 255, 0.1);
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+            border-radius: 20px;
+        }
+
+        .footer-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #8c00ff, #7700ff);
+            border-radius: 20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(140, 0, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .footer-links a:hover::before {
+            opacity: 0.2;
+        }
+
+        .footer-copyright {
+            color: #888;
+            font-size: 1rem;
+            text-align: right;
+            padding: 1rem 2rem;
+            background: rgba(98, 0, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid rgba(183, 0, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-gamepad"></i>
+            <span>Midnight Runners</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="media.html">Media</a>
+            <a href="team.html" class="active">Team</a>
+            <a href="discord.html">Discord</a>
+            <a href="candidatura.html">Candidatura</a>
+        </div>
+    </nav>
+
+    <main class="team-content">
+        <h1>Il Nostro Team</h1>
+        <div class="team-grid">
+            <div class="team-card" data-member="nova">
+                <div class="team-avatar">
+                    <img src="https://i.fmfile.com/SgBxPgR4f3KjzVGWtscOY/Chicche2.png" alt="Nova">
+                </div>
+                <h2 class="team-name">Nova</h2>
+                <span class="team-rank">Vlompi Palle</span>
+                                <div class="team-discord">
+                    </i> Capo Crew
+                </div>
+            </div>
+
+            <div class="team-card" data-member="shawty">
+                <div class="team-avatar">
+                    <img src="https://i.fmfile.com/SgBxPgR4f3KjzVGWtscOY/Kait2.png" alt="Shawty">
+                </div>
+                <h2 class="team-name">Shawty</h2>
+                <span class="team-rank">Sorella di Nova</span>
+                                <div class="team-discord">
+                    </i> Pilota
+                </div>
+            </div>
+
+             <div class="team-card" data-member="anon">
+                <div class="team-avatar">
+                    <img src="https://r2.fivemanage.com/SgBxPgR4f3KjzVGWtscOY/55168-200.png" alt="Anonimo">
+                </div>
+                <h2 class="team-name">(Anonimo)</h2>
+                <span class="team-rank">L'anziano del Team</span>
+                <div class="team-discord">
+                    </i> Pilota
+                </div>
+            </div>
+
+            <div class="team-card" data-member="nami">
+                <div class="team-avatar">
+                    <img src="https://i.fmfile.com/SgBxPgR4f3KjzVGWtscOY/image/Me12.png" alt="Nami">
+                </div>
+                <h2 class="team-name">Nami</h2>
+                <span class="team-rank">Il coglione</span>
+                                <div class="team-discord">
+                    </i> Fotografo - Programmatore
+                </div>
+            </div>
+
+            <div class="team-card" data-member="lethal">
+                <div class="team-avatar">
+                    <img src="https://i.fmfile.com/SgBxPgR4f3KjzVGWtscOY/Vincent8.png" alt="Lethal">
+                </div>
+                <h2 class="team-name">Lethal</h2>
+                <span class="team-rank">Figlio di Anonimo</span>
+                <div class="team-discord">
+                    </i> Pilota
+                </div>
+            </div>
+
+            <div class="team-card" data-member="eis">
+                <div class="team-avatar">
+                    <img src="https://r2.fivemanage.com/SgBxPgR4f3KjzVGWtscOY/Phoebe2.png" alt="Eis">
+                </div>
+                <h2 class="team-name">Eis</h2>
+                <span class="team-rank">La Biondina</span>
+                <div class="team-discord">
+                    </i> Pilota
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="teamModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title"></h2>
+            <p class="modal-text"></p>
+            <div class="modal-tasks">
+                <h3>Responsabilità</h3>
+                <ul class="tasks-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="imprint.html">Altre Info</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2025 Midnight Runner Crew.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('teamModal');
+            const modalTitle = modal.querySelector('.modal-title');
+            const modalText = modal.querySelector('.modal-text');
+            const tasksList = modal.querySelector('.tasks-list');
+            const closeModal = modal.querySelector('.close-modal');
+            const teamCards = document.querySelectorAll('.team-card');
+
+            const teamInfo = {
+                nova: {
+                    title: 'Nova',
+                    text: 'Nova può essere chiamata la rinascente, figlia del fondatore della crew.',
+                    tasks: [
+                        'Prima o poi scriverò qualcosa'
+                    ]
+                },
+                shawty: {
+                    title: 'Shawty',
+                    text: 'Shawty è la sorella di Nova.',
+                    tasks: [
+                        'Prima o poi scriverò qualcosa'
+                    ]
+                },
+                anon: {
+                    title: '(Anonimo)',
+                    text: 'Per ora si sa solo che è una vecchia conoscenza del padre di Nova.',
+                    tasks: [
+                        'Prima o poi scriverò qualcosa'
+                    ]
+                },
+                nami: {
+                    title: 'Nami',
+                    text: 'Un Fotografo, Stilista, Appassionato di Motori, diciamo un pò tutto.',
+                    tasks: [
+                        'Prima o poi scriverò qualcosa'
+                    ]
+                },
+                lethal: {
+                    title: 'Lethal',
+                    text: 'Un piccolo ninja che ancora non sa delle capacità che può avere.',
+                    tasks: [
+                        'Prima o poi scriverò qualcosa'
+                    ]
+                },
+                eis: {
+                    title: 'Eis',
+                    text: 'Eis è la biondina che fin\'ora ha trovato buoni aggangi.',
+                    tasks: [
+                        'Prima o poi scriverò qualcosa'
+                    ]
+                }
+            };
+
+            teamCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const member = this.dataset.member;
+                    const info = teamInfo[member];
+                    modalTitle.textContent = info.title;
+                    modalText.textContent = info.text;
+                    
+                    tasksList.innerHTML = '';
+                    info.tasks.forEach(task => {
+                        const li = document.createElement('li');
+                        li.textContent = task;
+                        tasksList.appendChild(li);
+                    });
+                    
+                    modal.style.display = 'flex';
+                });
+            });
+
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> 
