@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sito Ufficiale MRC</title>
+    <title>Team</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -466,17 +466,6 @@
                     </i> Pilota
                 </div>
             </div>
-
-            <div class="team-card" data-member="tyron">
-                <div class="team-avatar">
-                    <img src="https://i.fmfile.com/SgBxPgR4f3KjzVGWtscOY/Tyron2.png" alt="Tyron">
-                </div>
-                <h2 class="team-name">Tyron</h2>
-                <span class="team-rank">Il Texano</span>
-                <div class="team-discord">
-                    </i> Pilota
-                </div>
-            </div>
         </div>
     </main>
 
@@ -513,8 +502,7 @@
             const closeModal = modal.querySelector('.close-modal');
             const teamCards = document.querySelectorAll('.team-card');
 
-            const teamInfo = <div class="discord-features media-gallery">
-            {
+            const teamInfo = {
                 nova: {
                     title: 'Nova',
                     text: 'Nova può essere chiamata la rinascente, figlia del fondatore della crew.',
@@ -553,13 +541,6 @@
                 eis: {
                     title: 'Eis',
                     text: 'Eis è la biondina che fin\'ora ha trovato buoni aggangi.',
-                    tasks: [
-                        'Prima o poi scriverò qualcosa'
-                    ]
-                },
-                tyron: {
-                    title: 'Tyron',
-                    text: 'Ultimo membro del carro.',
                     tasks: [
                         'Prima o poi scriverò qualcosa'
                     ]
