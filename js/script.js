@@ -25,6 +25,15 @@ if (burger) {
     });
 }
 
+function openLightbox(src) {
+    const isVideo = src.endsWith('.mp4');
+    const lightboxContent = document.getElementById('lightbox-content');
+    lightboxContent.innerHTML = isVideo
+        ? `<video src="${src}" controls autoplay></video>`
+        : `<img src="${src}">`;
+    document.getElementById('lightbox').style.display = 'block';
+}
+
 const currentLocation = location.href;
 const menuItems = document.querySelectorAll('.nav-links a');
 menuItems.forEach(item => {
